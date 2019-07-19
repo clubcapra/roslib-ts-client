@@ -3,18 +3,20 @@
   "version": "0.1.1",
   "description": "A typescript wrapper for roslib written in typescript",
   "author": "Charles Giguere (IceSentry)",
-    "keywords": [
+  "keywords": [
     "ros",
     "roslib"
   ],
   "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 0",
     "build": "parcel build ./src/RosClient.ts",
     "lint": "eslint --fix ./src/RosClient.ts",
     "prepare": "npm run build"
   },
-  "files": ["dist/**/*"],
+  "files": [
+    "dist/**/*"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
