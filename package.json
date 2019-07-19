@@ -1,20 +1,22 @@
 {
-  "name": "roslib-ts-client",
-  "version": "1.0.0",
+  "name": "@club_capra/roslib-ts-client",
+  "version": "0.1.1",
   "description": "A typescript wrapper for roslib written in typescript",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "parcel build ./src/RosClient.ts",
-    "lint": "eslint --fix ./src/RosClient.ts"
-  },
-  "keywords": [
+  "author": "Charles Giguere (IceSentry)",
+    "keywords": [
     "ros",
     "roslib"
   ],
-  "author": "Charles Giguere (IceSentry)",
   "license": "SEE LICENSE IN LICENSE.md",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build ./src/RosClient.ts",
+    "lint": "eslint --fix ./src/RosClient.ts",
+    "prepare": "npm run build"
+  },
+  "files": ["dist/**/*"],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "dependencies": {
     "roslib": "^1.0.1"
   },
