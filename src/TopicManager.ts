@@ -8,11 +8,11 @@ class TopicManager {
   private registeredTopics: Map<string, RegisteredTopic> = new Map()
   private topics: Map<string, Topic> = new Map()
 
-  public constructor(ros: Ros) {
+  constructor(ros: Ros) {
     this.ros = ros
   }
 
-  public subscribe(options: TopicOptions, handler: Function) {
+  subscribe(options: TopicOptions, handler: Function) {
     const signature = getTopicSignature(options)
     const topic = this.registeredTopics.get(signature)
 
@@ -26,15 +26,15 @@ class TopicManager {
     this.listen(options)
   }
 
-  public unsubscribe(options: TopicOptions) {
+  unsubscribe(options: TopicOptions) {
     this.getTopic(options).unsubscribe()
   }
 
-  public publish({ name, messageType }: TopicOptions, payload: any) {
+  publish({ name, messageType }: TopicOptions, payload: any) {
     this.getTopic({ name, messageType }).publish(new Message(payload))
   }
 
-  public unsubscribeAllTopics() {
+  unsubscribeAllTopics() {
     this.registeredTopics.forEach(registeredTopic => {
       if (registeredTopic.topic) {
         registeredTopic.topic.unsubscribe()
@@ -43,7 +43,7 @@ class TopicManager {
     })
   }
 
-  public reconnectAllDisconnectedHandler() {
+  reconnectAllDisconnectedHandler() {
     this.registeredTopics.forEach(topic => {
       if (topic.topic === null && topic.handlers.length > 0) {
         this.listen(topic.options)
@@ -67,7 +67,7 @@ class TopicManager {
     }
   }
 
-  private getTopic({ name, messageType }: TopicOptions): Topic {
+  private getTopic({ name, messageType }: TopicOptions) {
     const signature = getTopicSignature({ name, messageType })
 
     if (this.topics.has(signature)) {

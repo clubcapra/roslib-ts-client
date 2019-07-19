@@ -6,11 +6,11 @@ class ServiceManager {
   private ros: Ros
   private services: Map<string, Service> = new Map()
 
-  public constructor(ros: Ros) {
+  constructor(ros: Ros) {
     this.ros = ros
   }
 
-  public callService(options: ServiceOptions, payload?: any): Promise<any> {
+  callService(options: ServiceOptions, payload?: any): Promise<any> {
     const service = this.getService(options)
 
     const request = new ServiceRequest(payload)

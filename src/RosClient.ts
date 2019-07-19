@@ -20,11 +20,7 @@ export default class RosClient {
     this.serviceManager = new ServiceManager(rosInstance)
   }
 
-  connect(
-    robotIP = 'localhost',
-    port = '9090',
-    shouldTryToReconnect = false
-  ): void {
+  connect(robotIP = 'localhost', port = '9090', shouldTryToReconnect = false) {
     this.shouldTryToReconnect = shouldTryToReconnect
     this.robotIP = robotIP
     this.port = port
@@ -40,11 +36,11 @@ export default class RosClient {
     this.ros.connect(url)
   }
 
-  enableLogging(): void {
+  enableLogging() {
     this.isLogEnabled = true
   }
 
-  disconnect(): void {
+  disconnect() {
     this.ros.close()
   }
 
@@ -60,7 +56,7 @@ export default class RosClient {
     this.topicManager.publish(options, payload)
   }
 
-  callService(options: ServiceOptions, payload?: any): Promise<any> {
+  callService(options: ServiceOptions, payload?: any) {
     return this.serviceManager.callService(options, payload)
   }
 
@@ -70,7 +66,7 @@ export default class RosClient {
     this.ros.on('error', this.onError(onError))
   }
 
-  private onConnection(onConnection: Function): (event: any) => void {
+  private onConnection(onConnection: Function) {
     return () => {
       this.topicManager.reconnectAllDisconnectedHandler()
       this.connected = true
@@ -78,7 +74,7 @@ export default class RosClient {
     }
   }
 
-  private onClose(onClose: Function): (event: any) => void {
+  private onClose(onClose: Function) {
     return () => {
       this.topicManager.unsubscribeAllTopics()
       this.connected = false

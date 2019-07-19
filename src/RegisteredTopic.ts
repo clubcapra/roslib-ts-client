@@ -6,7 +6,7 @@ export default class RegisteredTopic {
   public topic: Topic | undefined | null
   public options: TopicOptions
 
-  public constructor(options: TopicOptions, handler: Function) {
+  constructor(options: TopicOptions, handler: Function) {
     this.handlers = [handler]
     this.topic = undefined
     this.options = options
