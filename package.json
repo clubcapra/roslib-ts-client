@@ -17,7 +17,6 @@
     "build": "parcel build ./src/RosClient.ts",
     "lint": "eslint --fix ./src/RosClient.ts",
     "preversion": "npm run lint",
-    "postversion": "git push && git push --tags",
     "prepublishOnly": "npm test && npm run lint",
     "prepare": "npm run build"
   },
