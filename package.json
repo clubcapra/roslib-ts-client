@@ -2,13 +2,13 @@
   "name": "@club_capra/roslib-ts-client",
   "version": "0.1.3",
   "description": "A typescript wrapper for roslib written in typescript",
-  "author": "Charles Giguere (IceSentry)",
+  "author": "Charles Giguere (https://github.com/IceSentry)",
   "homepage": "https://github.com/clubcapra/roslib-ts-client",
   "keywords": [
     "ros",
     "roslib"
   ],
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "parcel build ./src/RosClient.ts",
