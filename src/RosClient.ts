@@ -13,14 +13,26 @@ export default class RosClient {
   private connected: boolean = false
   private isLogEnabled: boolean = false
 
-  private constructor() {
+  constructor(
+    robotIP = 'localhost',
+    port = '9090',
+    shouldTryToReconnect = false
+  ) {
     const rosInstance = new Ros({})
     this.ros = rosInstance
     this.topicManager = new TopicManager(rosInstance)
     this.serviceManager = new ServiceManager(rosInstance)
+
+    this.robotIP = robotIP
+    this.port = port
+    this.shouldTryToReconnect = shouldTryToReconnect
   }
 
-  connect(robotIP = 'localhost', port = '9090', shouldTryToReconnect = false) {
+  connect(
+    robotIP = this.robotIP,
+    port = this.port,
+    shouldTryToReconnect = this.shouldTryToReconnect
+  ) {
     this.shouldTryToReconnect = shouldTryToReconnect
     this.robotIP = robotIP
     this.port = port
@@ -92,7 +104,7 @@ export default class RosClient {
       onError(error)
 
       if (this.shouldTryToReconnect) {
-        this.connect(this.robotIP, this.port, true)
+        this.connect(this.robotIP, this.port, this.shouldTryToReconnect)
       }
     }
   }
