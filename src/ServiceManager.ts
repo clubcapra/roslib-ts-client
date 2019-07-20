@@ -1,6 +1,6 @@
 import { Ros, Service, ServiceRequest } from 'roslib'
-import { ServiceOptions } from '@types'
-import { getServiceSignature } from 'utils'
+import { ServiceOptions } from '@/@types'
+import { getServiceSignature } from '@/utils'
 
 class ServiceManager {
   private ros: Ros

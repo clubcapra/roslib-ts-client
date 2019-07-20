@@ -1,4 +1,4 @@
-import { TopicOptions, ServiceOptions } from '@types'
+import { TopicOptions, ServiceOptions } from '@/@types'
 
 const getSignature = (name: string, type: string): string => {
   return `${name}/${type}`

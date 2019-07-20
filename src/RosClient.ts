@@ -1,7 +1,7 @@
 import { Ros } from 'roslib'
-import { TopicOptions, ServiceOptions } from '@types'
-import TopicManager from 'TopicManager'
-import ServiceManager from 'ServiceManager'
+import { TopicOptions, ServiceOptions } from '@/@types'
+import TopicManager from '@/TopicManager'
+import ServiceManager from '@/ServiceManager'
 
 export default class RosClient {
   ros: Ros

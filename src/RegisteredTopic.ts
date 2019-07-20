@@ -1,5 +1,5 @@
 import { Topic } from 'roslib'
-import { TopicOptions } from '@types'
+import { TopicOptions } from '@/@types'
 
 export default class RegisteredTopic {
   handlers: Function[] = []
