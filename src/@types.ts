@@ -1,3 +1,7 @@
+import RosClient from '@/RosClient'
+
+export default RosClient
+
 export interface TopicOptions {
   name: string
   messageType: string
