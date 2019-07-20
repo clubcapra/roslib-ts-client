@@ -1,7 +1,7 @@
 import { Ros, Topic, Message } from 'roslib'
-import { TopicOptions } from '~/@types'
-import RegisteredTopic from '~/RegisteredTopic'
-import { getTopicSignature } from '~utils'
+import { TopicOptions } from '@types'
+import RegisteredTopic from 'RegisteredTopic'
+import { getTopicSignature } from 'utils'
 
 class TopicManager {
   private ros: Ros

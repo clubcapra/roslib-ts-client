@@ -5,14 +5,13 @@ module.exports = {
     node: true,
   },
 
-  extends:  [
+  extends: [
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
   ],
 
   rules: {
-
     'no-console': [
       'warn',
       {
@@ -31,14 +30,17 @@ module.exports = {
     ],
     'linebreak-style': ['error', 'windows'],
     '@typescript-eslint/explicit-function-return-type': [0],
-    '@typescript-eslint/explicit-member-accessibility': [2, { accessibility: 'no-public', overrides: { properties: 'explicit' } } ],
+    '@typescript-eslint/explicit-member-accessibility': [
+      2,
+      { accessibility: 'no-public' },
+    ],
     '@typescript-eslint/no-explicit-any': 0,
   },
 
-  parser:  '@typescript-eslint/parser',
+  parser: '@typescript-eslint/parser',
 
-  parserOptions:  {
-    ecmaVersion:  2018,  // Allows for the parsing of modern ECMAScript features
-    sourceType:  'module',  // Allows for the use of imports
+  parserOptions: {
+    ecmaVersion: 2018, // Allows for the parsing of modern ECMAScript features
+    sourceType: 'module', // Allows for the use of imports
   },
 }

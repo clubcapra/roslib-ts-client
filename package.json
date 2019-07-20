@@ -14,8 +14,8 @@
   "license": "SEE LICENSE IN LICENSE",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "build": "parcel build ./src/RosClient.ts",
-    "lint": "eslint --fix ./src/RosClient.ts",
+    "build": "tsc",
+    "lint": "eslint --fix ./src/**/*.ts --ignore-path .gitignore",
     "preversion": "npm run lint",
     "prepublishOnly": "npm test && npm run lint",
     "prepare": "npm run build"
@@ -26,7 +26,8 @@
   "main": "dist/RosClient.js",
   "types": "dist/RosClient.d.ts",
   "dependencies": {
-    "roslib": "^1.0.1"
+    "roslib": "^1.0.1",
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@types/node": "^12.6.8",
@@ -39,7 +40,6 @@
     "prettier": "^1.18.2",
     "@types/jest": "^24.0.15",
     "jest": "^24.8.0",
-    "parcel-bundler": "^1.12.3",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.3"
   }

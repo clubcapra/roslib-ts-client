@@ -1,10 +1,10 @@
 import { Topic } from 'roslib'
-import { TopicOptions } from './@types'
+import { TopicOptions } from '@types'
 
 export default class RegisteredTopic {
-  public handlers: Function[] = []
-  public topic: Topic | undefined | null
-  public options: TopicOptions
+  handlers: Function[] = []
+  topic: Topic | undefined | null
+  options: TopicOptions
 
   constructor(options: TopicOptions, handler: Function) {
     this.handlers = [handler]
