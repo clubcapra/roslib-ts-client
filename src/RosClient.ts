@@ -9,9 +9,9 @@ export default class RosClient {
   private serviceManager: ServiceManager
   private robotIP?: string
   private port?: string
-  private shouldTryToReconnect: boolean = false
-  private connected: boolean = false
-  private isLogEnabled: boolean = false
+  private shouldTryToReconnect = false
+  private connected = false
+  private isLogEnabled = false
 
   constructor(
     robotIP = 'localhost',
@@ -72,7 +72,11 @@ export default class RosClient {
     return this.serviceManager.callService(options, payload)
   }
 
-  setListeners(onConnection: Function, onClose: Function, onError: Function) {
+  setListeners(
+    onConnection: Function,
+    onClose: Function,
+    onError: (error: unknown) => void
+  ) {
     this.ros.on('connection', this.onConnection(onConnection))
     this.ros.on('close', this.onClose(onClose))
     this.ros.on('error', this.onError(onError))
@@ -94,7 +98,7 @@ export default class RosClient {
     }
   }
 
-  private onError(onError: Function): (event: any) => void {
+  private onError(onError: (error: unknown) => void): (event: any) => void {
     return error => {
       this.connected = false
       if (process.env.NODE_ENV !== 'production' && this.isLogEnabled) {
