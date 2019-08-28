@@ -37,7 +37,7 @@ export default class RosClient {
     this.robotIP = robotIP
     this.port = port
 
-    const url = `ws://${robotIP}:${port}`
+    const url = `wss://${robotIP}:${port}`
 
     // if (this.connected) {
     //   this.ros.close()
