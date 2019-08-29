@@ -113,7 +113,7 @@ export default class RosClient {
       onError(error)
 
       if (this.options.shouldTryToReconnect) {
-        this.connect(this.robotIP, this.port, this.options)
+        this.connect(this.robotIP, this.port)
       }
     }
   }
