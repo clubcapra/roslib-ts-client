@@ -53,7 +53,7 @@ export default class RosClient {
     try {
       this.ros.connect(url)
     } catch (e) {
-      if (process.env.NODE_ENV !== 'production' && this.options.enableLogging) {
+      if (this.isLogEnabled) {
         console.error(`RosClient: ros failed to connect to ${url}`, e)
       }
     }
@@ -112,7 +112,7 @@ export default class RosClient {
   private onError(onError: (error: unknown) => void): (event: any) => void {
     return error => {
       this.connected = false
-      if (process.env.NODE_ENV !== 'production' && this.options.enableLogging) {
+      if (this.isLogEnabled) {
         console.error('RosError', error)
       }
 
@@ -122,5 +122,9 @@ export default class RosClient {
         this.connect(this.robotIP, this.port)
       }
     }
+  }
+
+  private get isLogEnabled() {
+    return process.env.NODE_ENV !== 'production' && this.options.enableLogging
   }
 }
