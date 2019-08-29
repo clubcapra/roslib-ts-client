@@ -9,6 +9,12 @@ interface RosClientOptions {
   enableSsl: boolean
 }
 
+const defaultOptions: RosClientOptions = {
+  shouldTryToReconnect: false,
+  enableLogging: false,
+  enableSsl: false,
+}
+
 export default class RosClient {
   ros: Ros
   private topicManager: TopicManager
@@ -21,11 +27,7 @@ export default class RosClient {
   constructor(
     robotIP = 'localhost',
     port = '9090',
-    options: RosClientOptions = {
-      shouldTryToReconnect: false,
-      enableLogging: false,
-      enableSsl: false,
-    }
+    options: RosClientOptions = defaultOptions
   ) {
     const rosInstance = new Ros({})
     this.ros = rosInstance
@@ -37,14 +39,15 @@ export default class RosClient {
     this.options = options
   }
 
-  connect(robotIP = this.robotIP, port = this.port, options: RosClientOptions) {
+  setOptions(options: RosClientOptions) {
+    this.options = options
+  }
+
+  connect(robotIP = this.robotIP, port = this.port) {
     this.robotIP = robotIP
     this.port = port
 
-    this.options = options
-
-    const protocol = options.enableSsl ? 'wss' : 'ws'
-
+    const protocol = this.options.enableSsl ? 'wss' : 'ws'
     const url = `${protocol}://${robotIP}:${port}`
 
     this.ros.connect(url)
@@ -70,11 +73,15 @@ export default class RosClient {
     return this.serviceManager.callService(options, payload)
   }
 
-  setListeners(
-    onConnection: Function,
-    onClose: Function,
+  setListeners({
+    onConnection,
+    onClose,
+    onError,
+  }: {
+    onConnection: () => void
+    onClose: () => void
     onError: (error: unknown) => void
-  ) {
+  }) {
     this.ros.on('connection', this.onConnection(onConnection))
     this.ros.on('close', this.onClose(onClose))
     this.ros.on('error', this.onError(onError))
