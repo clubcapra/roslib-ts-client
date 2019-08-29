@@ -50,7 +50,13 @@ export default class RosClient {
     const protocol = this.options.enableSsl ? 'wss' : 'ws'
     const url = `${protocol}://${robotIP}:${port}`
 
-    this.ros.connect(url)
+    try {
+      this.ros.connect(url)
+    } catch (e) {
+      if (process.env.NODE_ENV !== 'production' && this.options.enableLogging) {
+        console.error(`RosClient: ros failed to connect to ${url}`, e)
+      }
+    }
   }
 
   disconnect() {
