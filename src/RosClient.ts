@@ -3,6 +3,12 @@ import { TopicOptions, ServiceOptions } from '@/@types'
 import TopicManager from '@/TopicManager'
 import ServiceManager from '@/ServiceManager'
 
+interface Listeners {
+  onConnection: () => void
+  onClose: () => void
+  onError: (error: unknown) => void
+}
+
 interface RosClientOptions {
   shouldTryToReconnect: boolean
   enableLogging: boolean
@@ -23,6 +29,7 @@ export default class RosClient {
   private port?: string
   private connected = false
   private options: RosClientOptions
+  private listeners?: Listeners
 
   constructor(
     robotIP = 'localhost',
@@ -56,6 +63,10 @@ export default class RosClient {
       if (this.isLogEnabled) {
         console.error(`RosClient: ros failed to connect to ${url}`, e)
       }
+
+      if (this.listeners) {
+        this.listeners.onError('RosClient: ros failed to connect to ${url}')
+      }
     }
   }
 
@@ -79,15 +90,13 @@ export default class RosClient {
     return this.serviceManager.callService(options, payload)
   }
 
-  setListeners({
-    onConnection,
-    onClose,
-    onError,
-  }: {
-    onConnection: () => void
-    onClose: () => void
-    onError: (error: unknown) => void
-  }) {
+  setListeners({ onConnection, onClose, onError }: Listeners) {
+    this.listeners = {
+      onConnection,
+      onClose,
+      onError,
+    }
+
     this.ros.on('connection', this.onConnection(onConnection))
     this.ros.on('close', this.onClose(onClose))
     this.ros.on('error', this.onError(onError))
