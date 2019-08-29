@@ -1,6 +1,6 @@
 {
   "name": "@club_capra/roslib-ts-client",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "A typescript wrapper for roslib written in typescript",
   "author": "Charles Giguere (https://github.com/IceSentry)",
   "repository": {
