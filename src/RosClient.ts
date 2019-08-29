@@ -3,20 +3,29 @@ import { TopicOptions, ServiceOptions } from '@/@types'
 import TopicManager from '@/TopicManager'
 import ServiceManager from '@/ServiceManager'
 
+interface RosClientOptions {
+  shouldTryToReconnect: boolean
+  enableLogging: boolean
+  enableSsl: boolean
+}
+
 export default class RosClient {
   ros: Ros
   private topicManager: TopicManager
   private serviceManager: ServiceManager
   private robotIP?: string
   private port?: string
-  private shouldTryToReconnect = false
   private connected = false
-  private isLogEnabled = false
+  private options: RosClientOptions
 
   constructor(
     robotIP = 'localhost',
     port = '9090',
-    shouldTryToReconnect = false
+    options: RosClientOptions = {
+      shouldTryToReconnect: false,
+      enableLogging: false,
+      enableSsl: false,
+    }
   ) {
     const rosInstance = new Ros({})
     this.ros = rosInstance
@@ -25,31 +34,20 @@ export default class RosClient {
 
     this.robotIP = robotIP
     this.port = port
-    this.shouldTryToReconnect = shouldTryToReconnect
+    this.options = options
   }
 
-  connect(
-    robotIP = this.robotIP,
-    port = this.port,
-    shouldTryToReconnect = this.shouldTryToReconnect
-  ) {
-    this.shouldTryToReconnect = shouldTryToReconnect
+  connect(robotIP = this.robotIP, port = this.port, options: RosClientOptions) {
     this.robotIP = robotIP
     this.port = port
 
-    const url = `wss://${robotIP}:${port}`
+    this.options = options
 
-    // if (this.connected) {
-    //   this.ros.close()
-    //   this.ros = new Ros({})
-    //   this.initListeners()
-    // }
+    const protocol = options.enableSsl ? 'wss' : 'ws'
+
+    const url = `${protocol}://${robotIP}:${port}`
 
     this.ros.connect(url)
-  }
-
-  enableLogging() {
-    this.isLogEnabled = true
   }
 
   disconnect() {
@@ -101,14 +99,14 @@ export default class RosClient {
   private onError(onError: (error: unknown) => void): (event: any) => void {
     return error => {
       this.connected = false
-      if (process.env.NODE_ENV !== 'production' && this.isLogEnabled) {
+      if (process.env.NODE_ENV !== 'production' && this.options.enableLogging) {
         console.error('RosError', error)
       }
 
       onError(error)
 
-      if (this.shouldTryToReconnect) {
-        this.connect(this.robotIP, this.port, this.shouldTryToReconnect)
+      if (this.options.shouldTryToReconnect) {
+        this.connect(this.robotIP, this.port, this.options)
       }
     }
   }
